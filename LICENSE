@@ -1,7 +1,8 @@
 MIT License
 
-Copyright (c) 2017 juanantoniogit
+Copyright (c) 2016 gokudomatic
 
+All source codes in Godot format (.gd, .scn, .tscn) are licensed with MIT as follow.
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -19,3 +20,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+= Assets =
+Assets like textures and sounds are provided under their own license. 
+They are either in public domain or CC BY-SA. It is possible to not comply
+to those licenses by removing or replacing the assets. This won't affect
+the source code of the controller.
