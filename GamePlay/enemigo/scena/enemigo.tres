@@ -1,0 +1,24 @@
+[gd_resource type="Animation" format=1]
+
+[resource]
+
+resource/name = "virus"
+length = 2.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:transform/rotation")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 0.6, 1.2, 1.3, 2 ), "transitions":FloatArray( 1, 1, 1, 1, 1 ), "update":0, "values":[ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ) ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:transform/translation")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = { "times":FloatArray( 0, 0.6, 1.2, 1.3, 2 ), "transitions":FloatArray( 1, 1, 1, 1, 1 ), "update":0, "values":[ Vector3( 5.82115, 2.37195, 0.140744 ), Vector3( 4.04298, 2.05322, 2.95274 ), Vector3( 1.16163, -2.07701, 0.26607 ), Vector3( 0.681403, 0, -0.181708 ), Vector3( 5.82115, 2.37195, 0.140744 ) ] }
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:transform/scale")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = { "times":FloatArray( 0, 0.6, 1.2, 1.3, 2 ), "transitions":FloatArray( 1, 1, 1, 1, 1 ), "update":0, "values":[ Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ] }
+
