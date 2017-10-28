@@ -1,0 +1,144 @@
+extends Node
+# class member variables go here, for example:
+var estado = 0
+#var arranque = false
+
+var escenapreCyclopi = preload("res://EscenaLogoCyclo.xml")
+var logoCyloPi
+var escenapreEscenario = preload("res://EscenaGamePlay.tscn")
+var escenario1
+#var escenaprePlayer = preload("res://addons/eco.fps.controller/kinematic_fps_controller.tscn")
+#var jugadorSniper
+
+var escenapreHudValor0 = preload("res://EscenaValorPorPantalla.xml")
+var valorPosi
+
+#variables para cronometro
+var escenapreNumeroTiempo = preload("res://EscenaValorPorPantalla.xml") # pal tiempo
+const CONSminutos = 60000
+var minutos = 0 
+var CONTminutos = 60000
+var milisegundos = int()
+var segundos = 0
+var CONTsegundos = 6000
+var relog # tipo escena
+var segundospantalla
+var cargaRelog = false
+var tiempoInicio
+
+#cuenta a atras
+var minqq = 0
+var segqq = 5
+var segqqpantalla
+var Escenaminqq
+var EscenaTiempoQQ
+
+
+
+var contentra = 0
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	set_process_input(true)
+	set_fixed_process(true)
+	
+	tiempoInicio = OS.get_ticks_msec()
+	
+	print("Inicialización termianda")
+	pass
+
+func _fixed_process(delta):
+	segundospantalla = segundos -(minutos*60)
+	segqqpantalla = segqq - segundospantalla
+	#actualizarelog()
+	if cargaRelog:
+		#actualizarelog()
+		relog.set_text("Timer: "+ str(minutos) +":"+ str(segundospantalla) )
+		#actualizar cuenta a tras
+		EscenaTiempoQQ.set_text("Cuenta a tras: " + str(minqq)+ ":" + str(segqqpantalla))
+	#Bloque relog:
+	if ((OS.get_ticks_msec() - tiempoInicio) > CONTsegundos):
+		segundos +=1
+		CONTsegundos += 1000
+		
+	if ((float((OS.get_ticks_msec() - tiempoInicio))) > CONTminutos):
+		minutos += 1
+		CONTminutos += CONSminutos
+		
+	if segqqpantalla == 0 and minqq ==0:
+		print("HAs perdido")
+		cargaRelog = false
+		estado = 3
+	
+	if segqqpantalla == 0:
+		minqq -= 1
+		segqqpantalla = 60
+		
+	
+func _input(event):
+	
+	if event.type == InputEvent.KEY and event.pressed and estado == 4:
+		valorPosi.free()
+		estado = 0
+	
+	# Game over por tiempo
+	if estado == 3:
+		#Descarga escenas
+		#valorPosi.free()
+		escenario1.free()
+		relog.free()
+		EscenaTiempoQQ.free()
+		#actualiza pantalla
+		valorPosi.set_text("Sniper Academy: time out ==> Game 0ver")
+		estado = 4
+		
+	
+	if event.type == InputEvent.KEY and event.pressed and estado == 1:
+		#bloque de liberación:
+		logoCyloPi.free()
+		print("entrada,var. estado es: " + str(estado))
+		
+		escenario1 = escenapreEscenario.instance()
+		get_parent().add_child(escenario1)
+		#texto info
+		valorPosi = escenapreHudValor0.instance()
+		get_parent().add_child(valorPosi)
+		valorPosi.set_pos(Vector2(20,20))
+		valorPosi.set_text("Sniper Academy: text values")
+		
+		#relog
+		relog = escenapreNumeroTiempo.instance()
+		get_parent().add_child(relog)
+		relog.set_pos(Vector2(20,40))
+		#relog.set_scale(Vector2(4,4))
+		relog.set_text("Timer:" + str(minutos)+ ":" + str(segundos))
+		cargaRelog = true
+		
+		#relog cuenta a tras
+		EscenaTiempoQQ = escenapreNumeroTiempo.instance()
+		get_parent().add_child(EscenaTiempoQQ)
+		EscenaTiempoQQ.set_pos(Vector2(20,60))
+		EscenaTiempoQQ.set_text("Timer:" + str(minqq)+ ":" + str(segqq))
+		
+		
+		estado = 2
+		print(contentra)
+		print("pongo var. estado a: " + str(estado))
+	
+	# estado incial, espera a que teclado
+	if event.type == InputEvent.KEY and event.pressed and estado == 0:
+		#is_pressed()
+		print("Estaba en el estado 0 y se ha pulsado teclado: prepara estado 1")
+		logoCyloPi = escenapreCyclopi.instance()
+		get_parent().add_child(logoCyloPi)
+		#logoCyloPi.set_pos(Vector2(0,750))
+		#logoCyloPi.set_scale(Vector2(5,5))
+		print("cargo logo CycloPi")
+		print("cualquier entrada, el valor de v. estado es: " + str(estado))
+		estado = 1
+		contentra = contentra + 1
+		print(contentra)
+		print("pongo var. estado a: " + str(estado))
+		
+
