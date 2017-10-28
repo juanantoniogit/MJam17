@@ -101,7 +101,7 @@ func _input(event):
 		segundosPantalla = 0
 		tiempoIniciado = false
 		GDsingleton.puntos = 0
-		GDsingleton.vida = 10
+		GDsingleton.vida = GDsingleton.totalvida
 		info1.free()
 
 	#esto es pa la aumentar la cuenta a atras
@@ -131,7 +131,7 @@ func _input(event):
 			# meto el nodo de escribir cuenta a a tras
 			imprimirCA = escenaprePrePaEscribir.instance()
 			get_parent().add_child(imprimirCA)
-			imprimirCA.set_pos(Vector2(20,60))
+			imprimirCA.set_pos(Vector2(20,60))#vida
 			
 			
 			# meto el nodo de escribir distancia a centro
@@ -156,7 +156,6 @@ func _input(event):
 			imprimirVida = escenaprePrePaEscribir.instance()
 			get_parent().add_child(imprimirVida)
 			imprimirVida.set_pos(Vector2(20,140))
-			
 			imprimirVida.set_text(str(GDsingleton.vida))
 			# meto el gameplay
 			juego = escenaprePrePlayer.instance()
