@@ -1,11 +1,9 @@
-
-extends KinematicBody
+extends KinematicBody #shoot eco_body
 
 #classes
 const default_data_model=preload("res://addons/eco.fps.controller/player_data_base.gd")
 const default_projectile_factory=preload("res://addons/eco.fps.controller/projectiles/Projectile_Factory.gd")
-
-
+var escena_win = load("res://Menu/escena_win.tscn")
 var _is_loaded = false
 var velocity=Vector3()
 var yaw = 0
@@ -15,7 +13,7 @@ var on_floor=false
 var jump_timeout=0
 var step_timeout=0
 var attack_timeout=0
-var fly_mode=false
+var fly_mode=true
 var alive=true
 var current_target=null
 var current_target_2d_pos=null
@@ -30,6 +28,9 @@ onready var player_data=null
 onready var camera=get_node("eco_yaw/camera")
 onready var sfx=get_node("eco_sfx")
 onready var tween=get_node("eco_tween")
+onready var sonidos = get_node("sonidos")
+onready var colision=get_node("eco_body")
+#onready var colObjet=get_node("RayGol")
 
 var aim_offset=Vector3(0,1.5,0)
 
@@ -71,10 +72,12 @@ export(float) var STAIR_JUMP_TIMEOUT=0.1
 export(float) var footstep_factor=0.004
 export(float) var view_sensitivity = 0.3
 
+
 export(NodePath) var sfx_library=null
 ## weapon
 export(String) var weapon="" setget _set_weapon
 export(bool) var embed_children=false
+export(int) var tiempo_entre_disparos
 
 # signals
 signal start_shoot
@@ -83,10 +86,19 @@ signal attribute_changed(key,value)
 signal reload_weapon
 signal ammo_used
 
+
+
+onready var musica_ambiente = get_node("ambiente")
+
+
 #################################################################################3
 
 # initializer
 func _ready():
+	
+	print("musica_ambienteddddddddddddddddddddddddddddddddddddd")
+	musica_ambiente.play("Run Amok")
+	print(musica_ambiente)
 
 	_is_loaded=true
 
@@ -141,7 +153,7 @@ func _embed_children():
 			continue
 		else:
 			remove_child(child)
-			camera.add_child(child)
+			camera.add_child(child) #data
 
 # Keys and mouse handler
 func _input(ie):
@@ -190,17 +202,36 @@ func _exit_tree():
 
 func _fly(delta):
 	# read the rotation of the camera
+	if attack_timeout>0:
+		attack_timeout-=delta
+
 	var aim = get_node("eco_yaw/camera").get_global_transform().basis
 	# calculate the direction where the player want to move
 	var direction = Vector3()
-	if Input.is_action_pressed(action_forward):
-		direction -= aim[2]
-	if Input.is_action_pressed(action_backward):
-		direction += aim[2]
-	if Input.is_action_pressed(action_left):
-		direction -= aim[0]
-	if Input.is_action_pressed(action_right):
-		direction += aim[0]
+#	if Input.is_action_pressed(action_forward):
+	direction -= aim[2]
+#	if Input.is_action_pressed(action_backward):
+#		direction += aim[2]
+#	if Input.is_action_pressed(action_left):
+#		direction -= aim[0]
+#	if Input.is_action_pressed(action_right):
+#		direction += aim[0]
+	if Input.is_action_pressed(action_attack) and attack_timeout<=0:
+		shoot()
+		#GDsingleton.distanciaPayo = get_translation()
+		print("yoooo",get_translation())
+		GDsingleton.posicionPayo = get_translation()
+		print("yposicionpayo",GDsingleton.posicionPayo)
+		#get_node("SpatialSamplePlayer").play("rifleSound_1")
+		#get_node("sonidoDisparo").play("rifleSound_1")
+		sonidos.play("cartoon022")
+		print("disparo")
+		
+		is_attacking=true
+		
+	elif is_attacking and not Input.is_action_pressed(action_attack):
+		is_attacking=false
+		stop_shoot()
 	
 	direction = direction.normalized()
 		
@@ -220,16 +251,26 @@ func _fly(delta):
 	
 	while(attempts and is_colliding()):
 		var n=get_collision_normal()
+		print("colision del player")
 		motion=n.slide(motion)
 		velocity=n.slide(velocity)
+		
 		# check that the resulting velocity is not opposite to the original velocity, which would mean moving backward.
 		if(original_vel.dot(velocity)>0):
 			motion=move(motion)
 			if (motion.length()<0.001):
+				print("loquetienedelantes:")
+				GDsingleton.vida -=1
+				print("shape")
+				print(colision.get_shape())
+				print("col")
+				print(colision.get_collision_object_shape_index())
+				#print(str(colision.get_shape().get_name()))
+				sonidos.play("cartoon060")
 				break
 		attempts-=1
 
-func _walk(delta):
+func _walk(delta):#eco_body
 	
 	# process timers
 	if jump_timeout>0:
@@ -254,6 +295,13 @@ func _walk(delta):
 		direction += aim[0]
 	if Input.is_action_pressed(action_attack) and attack_timeout<=0:
 		shoot()
+		#GDsingleton.distanciaPayo = get_translation()
+		print("yoooo",get_translation())
+		GDsingleton.posicionPayo = get_translation()
+		print("yposicionpayo",GDsingleton.posicionPayo)
+		#get_node("SpatialSamplePlayer").play("rifleSound_1")
+		#get_node("sonidoDisparo").play("rifleSound_1")
+		print("disparo")
 		is_attacking=true
 	elif is_attacking and not Input.is_action_pressed(action_attack):
 		is_attacking=false
@@ -456,7 +504,7 @@ func _regen_bullet():
 
 func shoot():
 	if weapon_base.shoot():
-		attack_timeout=10.0/player_data.fire_rate
+		attack_timeout=tiempo_entre_disparos/player_data.fire_rate
 	emit_signal("start_shoot")
 
 func stop_shoot():
@@ -540,3 +588,15 @@ func _set_weapon(value):
 
 func get_bullet_factory_instance():
 	return default_projectile_factory.new()
+	
+	
+#func _on_Area_body_enter( body ):
+#	var groups = body.get_groups()
+#	if groups.has("player"):
+#		print("wiiiiiiiiiiiiiiiiiiiiiiiiiiiinnnnnnnnnnnn")
+#		#var _escena = escena_win.instance()
+#		#get_parent().add_child(_escena)
+#		global.goto_scene("res://Menu/escena_win.tscn")
+#		GDsingleton.estadoSIN = 4
+		
+#		set_pause_mode( true )

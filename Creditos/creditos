@@ -1,0 +1,47 @@
+
+
+Este juego ha sido realizado por:
+Antonio Bravo Meseguer
+Jose García Moreno
+Juan Antonio Frutos López.
+Para la GameJam MJam.17
+Gestionada por Amudev.
+
+Licencias de uso.
+Asset.
+-eco-fps-controller es un controlador 3d fps para Godot Engine, este componente tiene licencia MIT y puede ser usado para cualquier tipo de proyecto.
+Musica.
+-Tomar celula enemiga. (cartoon048.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=3604&sonido=resorte%20boing
+-Tomar energía de celula amiga. (cartoon130)
+http://www.sonidosmp3gratis.com/download.php?id=3686&sonido=pop
+-Sonido al coger energía del amigo. (cartoon172.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=3728&sonido=chorro
+-Sonido al coger energía del amigo. (008577395_prev.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=10540&sonido=ilusion%20magica%201
+-Sonido al morir. (008894898_prev.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=8771&sonido=trompeta%20comedia%2013
+-Sonido el matar al enemigo. (cartoon022.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=3578&sonido=disparo%204
+-Sonido cuando te mata el enemigo. (001096490_prev.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=14886&sonido=risa%20monstruo
+-Sonido de perder vida. (cartoon001.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=3557&sonido=remolinos
+-Sonido al ganar vida. (010607440_prev.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=9084&sonido=pitidos
+-Choque. (cartoon060.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=3616&sonido=plaf%201
+-Choque. (cartoon034.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=3590&sonido=bang
+-Sonido para morir o matar al enemigo. (008732448_prev.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=9217&sonido=ouu
+-Ambiente de batalla. (FLUTECOMEDYCTE05_40_5.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=5365&sonido=persecusion
+-Player en movimiento.(000205432_prev.mp3)
+http://www.sonidosmp3gratis.com/download.php?id=9266&sonido=correr
+
+-Musica ambiente. (Run Amok.mp3)
+https://incompetech.com/music/royalty-free/music.html
+"Run Amok" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/

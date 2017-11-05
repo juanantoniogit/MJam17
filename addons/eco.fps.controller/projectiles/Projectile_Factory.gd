@@ -1,5 +1,5 @@
 
-extends Node
+extends Node #pistol
 
 const basic_projectile=preload("res://addons/eco.fps.controller/projectiles/Basic.tscn")
 const basic_laser=preload("res://addons/eco.fps.controller/projectiles/energy_blast.tscn")
